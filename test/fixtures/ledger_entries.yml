@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kind: MyString
+  delta: 9.99
+  balance_after: MyString
+  decimal: MyString
+  memo: MyString
+  ref_type: MyString
+  ref_id: 1
+  wallet: one
+
+two:
+  kind: MyString
+  delta: 9.99
+  balance_after: MyString
+  decimal: MyString
+  memo: MyString
+  ref_type: MyString
+  ref_id: 1
+  wallet: two

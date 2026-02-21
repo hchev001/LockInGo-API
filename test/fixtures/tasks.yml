@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyString
+  color: MyString
+  icon: MyString
+  due_at: 2026-02-20 23:16:35
+  is_active: false
+  user: one
+
+two:
+  title: MyString
+  description: MyString
+  color: MyString
+  icon: MyString
+  due_at: 2026-02-20 23:16:35
+  is_active: false
+  user: two

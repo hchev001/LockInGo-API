@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cron_expr: MyString
+  window_start: 2026-02-20 23:17:15
+  window_end: 2026-02-20 23:17:15
+  task: one
+
+two:
+  cron_expr: MyString
+  window_start: 2026-02-20 23:17:15
+  window_end: 2026-02-20 23:17:15
+  task: two

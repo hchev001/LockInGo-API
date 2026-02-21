@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  qty: 9.99
+  cost: 9.99
+  requested_at: 2026-02-20 23:37:44
+  fulfilled_at: 2026-02-20 23:37:44
+  canceled_at: 2026-02-20 23:37:44
+  notes: MyString
+  user: one
+
+two:
+  status: MyString
+  qty: 9.99
+  cost: 9.99
+  requested_at: 2026-02-20 23:37:44
+  fulfilled_at: 2026-02-20 23:37:44
+  canceled_at: 2026-02-20 23:37:44
+  notes: MyString
+  user: two
