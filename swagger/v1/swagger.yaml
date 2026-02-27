@@ -1,0 +1,58 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/tasks":
+    get:
+      summary: Retrieves all tasks for the current user
+      tags:
+      - Tasks
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: tasks found
+        '401':
+          description: unauthorized
+    post:
+      summary: Creates a new task for the current user
+      tags:
+      - Tasks
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '201':
+          description: task created
+        '401':
+          description: unauthorized
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                color:
+                  type: string
+                icon:
+                  type: string
+                due_at:
+                  type: string
+                  format: date-time
+                is_active:
+                  type: boolean
+              required:
+              - title
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
