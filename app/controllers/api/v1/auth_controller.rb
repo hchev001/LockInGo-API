@@ -4,10 +4,8 @@ class Api::V1::AuthController < ApplicationController
 
   def login
     # get username and password from params
-    username = params[:username]
-    password = params[:password]
 
-    user = User.find_by(email: username)
+    user = User.find_by(email: params[:username])
 
     if user&.authenticate(params[:password])
       token = JsonWebToken.encode(user_id: user.id)
