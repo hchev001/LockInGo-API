@@ -3,13 +3,13 @@ class Api::V1::TasksController < ApplicationController
   # find the current current user tasks
   def index
     # find all tasks that belong to the current user
-    tasks = Tasks.where(user_id: current_user.id)
+    tasks = Task.where(user_id: current_user.id)
     render json: tasks, status: :ok
   end
 
   # create a new task for the current user
   def create
-    tasks = Task.new(task_params)
+    task = Task.new(task_params)
 
     # associate the new tasks with the current user
     task.user = current_user
@@ -38,4 +38,5 @@ class Api::V1::TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :color, :icon, :due_at, :is_active)
+  end
 end
