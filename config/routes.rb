@@ -3,10 +3,7 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   namespace :api do
     namespace :v1 do
-      get "tasks/index"
-      get "tasks/create"
-      get "tasks/update"
-      get "tasks/destroy"
+      resources :tasks, only: [:index, :create, :update, :destroy]
       post "auth/login"
       post "auth/register"
       delete "auth/logout"
