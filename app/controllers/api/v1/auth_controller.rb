@@ -19,6 +19,7 @@ class Api::V1::AuthController < ApplicationController
   end
 
   def register
+    # use the payload email, name, and password to create a new user
     user = User.new(user_params)
 
     if user.save
