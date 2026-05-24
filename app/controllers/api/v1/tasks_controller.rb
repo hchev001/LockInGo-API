@@ -30,6 +30,26 @@ class Api::V1::TasksController < ApplicationController
     end
   end
 
+  def complete
+    task = current_user.tasks.find(params[:id])
+    if task.completed?
+      ActionController::BadRequest "Task is already completed"
+    end
+
+    # mark the task as complete
+    task.completed_at = Time.now.utc
+
+    if task.save
+      head :ok
+    else
+      render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
+    end
+
+    #TODO: figure out how to issue the necessary tokens, maybe here would
+    # be a potential opportunity to send the task to a queue and just
+    # return immediately in case calculations get complex
+  end
+
   def destroy
     task = Task.find(params[:id])
     task.destroy
