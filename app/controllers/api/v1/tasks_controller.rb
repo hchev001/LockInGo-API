@@ -9,7 +9,7 @@ class Api::V1::TasksController < ApplicationController
 
   # create a new task for the current user
   def create
-    task = Task.new(task_params)
+    task = Task.new(create_task_params)
 
     # associate the new tasks with the current user
     task.user = current_user
@@ -22,8 +22,10 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def update
-    task = Task.find(params[:id])
-    if task.update(task_params)
+    #TODO: make sure the user can update the current task
+    task = current_user.tasks.find(params[:id])
+
+    if task.update(update_task_params)
       render json: task, status: :ok
     else
       render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
@@ -46,12 +48,18 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def destroy
-    task = Task.find(params[:id])
+    #TODO: make sure the user can delete the task
+    task = current_user.tasks.find(params[:id])
     task.destroy
     head :no_content
   end
 
-  def task_params
+  private
+  def create_task_params
+    params.require(:task).permit(:title, :description, :color, :icon, :due_at, :is_active)
+  end
+
+  def update_task_params
     params.require(:task).permit(:title, :description, :color, :icon, :due_at, :is_active)
   end
 end
