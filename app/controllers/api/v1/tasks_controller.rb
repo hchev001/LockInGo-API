@@ -32,18 +32,13 @@ class Api::V1::TasksController < ApplicationController
 
   def complete
     task = current_user.tasks.find(params[:id])
-    if task.completed?
-      ActionController::BadRequest "Task is already completed"
-    end
+    TaskCompletionService.new(task: task, user: current_user, now: Time.current).call
+    head :ok
 
-    # mark the task as complete
-    task.completed_at = Time.now.utc
-
-    if task.save
-      head :ok
-    else
-      render json: { errors: task.errors.full_messages }, status: :unprocessable_entity
-    end
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { errors: [ e.message ] }, status: :unprocessable_entity
+  rescue TaskCompletionService::AlreadyCompletedError => e
+    render json: { errors: [ e.message ] }, status: :bad_request
 
     #TODO: figure out how to issue the necessary tokens, maybe here would
     # be a potential opportunity to send the task to a queue and just
