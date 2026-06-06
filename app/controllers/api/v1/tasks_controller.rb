@@ -1,13 +1,13 @@
 class Api::V1::TasksController < ApplicationController
   
-  # find the current current user tasks
+  # @summary find the current current user tasks
   def index
     # find all tasks that belong to the current user
     tasks = Task.where(user_id: current_user.id)
     render json: tasks, status: :ok
   end
 
-  # create a new task for the current user
+  # @summary create a new task for the current user
   def create
     task = Task.new(create_task_params)
 
@@ -21,6 +21,7 @@ class Api::V1::TasksController < ApplicationController
     end
   end
 
+  # @summary update the task
   def update
     #TODO: make sure the user can update the current task
     task = current_user.tasks.find(params[:id])
@@ -32,6 +33,7 @@ class Api::V1::TasksController < ApplicationController
     end
   end
 
+  # @summary mark a task as complete
   def complete
     task = current_user.tasks.find(params[:id])
     TaskCompletionService.new(task: task, user: current_user, now: Time.current).call
@@ -47,6 +49,7 @@ class Api::V1::TasksController < ApplicationController
     # return immediately in case calculations get complex
   end
 
+  # @summary Destroy a task.
   def destroy
     #TODO: make sure the user can delete the task
     task = current_user.tasks.find(params[:id])

@@ -21,15 +21,23 @@ class ApplicationController < ActionController::API
     @current_user
   end
 
+  def render_success(message:, data: nil, status: :ok)
+    render json: { message: message, data: data }, status: status
+  end
+
+  def render_error(message:, errors: [], status: :unprocessable_entity)
+    render json: { message: message, errors: errors }, status: status
+  end
+
   def not_found(exception)
-    render json: { error: exception.message }, status: :not_found
+    render_error(message: exception.message, status: :not_found)
   end
 
   def bad_request(exception)
-    render json: { error: exception.message }, status: :bad_request
+    render_error(message: exception.message, status: :bad_request)
   end
 
   def internal_server_error(exception)
-    render json: { error: exception.message }, status: :internal_server_error
+    render_error(message: exception.message, status: :internal_server_error)
   end
 end

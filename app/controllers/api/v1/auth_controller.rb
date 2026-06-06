@@ -2,28 +2,35 @@
 class Api::V1::AuthController < ApplicationController
   skip_before_action :authenticate_user!, only: [:login, :register]
 
+  # @summary Login to the application
+  # @tags Auth
+  # @request_body Login credentials [!Inputs::LoginInput]
+  # @response Successful login [200] [Outputs::AuthResponse]
+  # @response Invalid credentials [401] [Outputs::ErrorResponse]
   def login
-    # get username and password from params
-
     user = User.find_by(email: params[:username])
 
     if user&.authenticate(params[:password])
       token = JsonWebToken.encode(user_id: user.id)
-      render json: { message: "Login successful", user: user, token: token }, status: :ok
+      render_success(message: "Login successful", data: { user: user, token: token })
     else
-      render json: { message: "Invalid username or password" }, status: :unauthorized
-    end 
+      render_error(message: "Invalid username or password", status: :unauthorized)
+    end
 
   end
 
+  # @summary Register a new user
+  # @tags Auth
+  # @request_body User registration details [!Inputs::RegisterInput]
+  # @response Successful registration [201] [Outputs::MessageResponse]
+  # @response Validation failed [422] [Outputs::ErrorResponse]
   def register
-    # use the payload email, name, and password to create a new user
     user = User.new(user_params)
 
     if user.save
-      render json: { message: "Registration successful" }, status: :created
+      render_success(message: "Registration successful", status: :created)
     else
-      render json: { message: "Registration failed", errors: user.errors.full_messages }, status: :unprocessable_entity
+      render_error(message: "Registration failed", errors: user.errors.full_messages)
     end
   end
 
